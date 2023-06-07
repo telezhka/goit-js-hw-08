@@ -3,7 +3,7 @@ const emailInput = form.querySelector('input[name="email"]');
 const messageInput = form.querySelector('textarea[name="message"]');
 emailInput.addEventListener('input', handleFormInput);
 messageInput.addEventListener('input', handleFormInput);
-
+import throttle from 'lodash/throttle';
 function handleFormInput() {
   const formData = {
     email: emailInput.value,
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     messageInput.value = formData.message;
   }
 });
-form.addEventListener('submit', handleSubmit);
+form.addEventListener('submit', throttle(handleSubmit, 500));
 
 function handleSubmit(event) {
   event.preventDefault();
@@ -33,7 +33,7 @@ function handleSubmit(event) {
 
   console.log(formData);
 
-  //   localStorage.removeItem('feedback-form-state');
+  localStorage.removeItem('feedback-form-state');
   emailInput.value = '';
   messageInput.value = '';
 }
